@@ -3,6 +3,7 @@ module Rack
 
     def initialize(app, options={})
       @app = app
+      @install_prompt = options[:install_prompt].nil? ? true : options[:install_prompt]
     end
 
     def call(env)
@@ -40,7 +41,7 @@ module Rack
       BOD
 
       body.gsub!(/<\/head>/, head + "\n</head>")
-      body.gsub!(/<\/body>/, bod  + "\n</body>")
+      body.gsub!(/<\/body>/, bod  + "\n</body>") if @install_prompt
       body
     end
 
